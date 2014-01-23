@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>how the fuck does updateasdfasdf work</title>
+		<script src="d3/d3.v3.js"></script>
+		<style type="text/css">
+		circle.bar { fill: green;}
+		</style>
+	</head>
+	<body>
+	
+
+<script type="text/javascript" charset="utf-8">
+		
+	// data
+	// var sigma = [[],[0],[1],[1,0]]
+	var sigma = [[1,0],[0],[1],[]]
+	// var sigma = [[],[0],[1],[2],[0,1],[0,2],[1,2],[0,1,2]]
+
+
+	// set the stage
+	var canvas = d3.select("body")
+		.append("svg")
+		.attr("width",500)
+		.attr("height",500)
+
+
+	var group = canvas.selectAll("g")
+		.data(sigma)
+		.enter()
+		.append("g")
+	
+
+			
+	var sets = group.append("rect")
+		.attr("x", function(d,i) {return 10*(i+1)})
+		.attr("y",function(d,i) {return 100+10*(5*(i+1)+d.length);})
+		.attr("width",function(d,i) { 
+			if (d.length == 0) { return 15; }
+			else if (d.length == 1) { return 30; }
+			else if (d. length == 2) { return 150; }			
+			})
+		.attr("height",function(d,i) { 
+			if (d.length == 0) { return 15; } 
+			else if (d.length == 1) { return 30; }
+			else if (d. length == 2) { return 200; }			
+			})
+		.style("fill",function(d) {return d3.rgb(100,30,150).darker(d.length);})
+
+	var sets2 = group.append("circle")
+		.attr("cx", function(d,i) {return 15*(i+1)} )
+		.attr("cy",function(d,i) {return 115+10*(5*(i+1)+d.length);})
+		.attr("r", function(d) {
+			if (d.length == 1) {return 10}
+			else {return 0}
+		})
+		.style("fill","blue")
+		
+
+		
+		
+	
+		// canvas.selectAll("g")
+		// .transition()
+		// .style("fill","green")
+		
+		
+		// canvas.selectAll("rect")
+		// .transition()
+		// .duration(3000)
+		// .style("fill","green")
+
+
+	
+		
+		</script>
+	</body>
+
+</html>

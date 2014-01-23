@@ -1,0 +1,1 @@
+manual_sigma2 and 3 attempt to place the elements of the power set (the sigma algebra) dynamically, with the size (radius of circle, width/height of rectangle) determined by d.length. 

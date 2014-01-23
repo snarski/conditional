@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>how the fuck does updateasdfasdf work</title>
+		<script src="d3/d3.v3.js"></script>
+		<style type="text/css">
+		circle.bar { fill: green;}
+		</style>
+	</head>
+	<body>
+	
+
+<script type="text/javascript" charset="utf-8">
+		
+	// data
+	var sigma = [[],[0],[1],[1,0]]
+	// var sigma = [[],[0],[1],[2],[0,1],[0,2],[1,2],[0,1,2]]
+
+
+	// set the stage
+	var canvas = d3.select("body")
+		.append("svg")
+		.attr("width",500)
+		.attr("height",500)
+
+
+	var group = canvas.selectAll("g")
+		.data(sigma)
+		.enter()
+		.append("g")
+
+			
+	var sets = group.append("circle")
+		.attr("cx",function(d) {return 100+30*d.length;})
+		.attr("cy",function(d,i) {return 100+30*(i-d.length)})
+		.attr("r",10)
+
+		
+		
+		</script>
+	</body>
+
+</html>
