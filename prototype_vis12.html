@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>how the fuck does updateasdfasdf work</title>
+		<script src="d3/d3.v3.js"></script>
+		<style type="text/css">
+
+		</style>
+	</head>
+	<body>
+	
+
+		<script type="text/javascript" charset="utf-8">
+		
+		//data
+		var data = [[75,75,"H, H"],[75,300,"T, H"],[300,75,"H, T"],[300,300,"T, T"]]
+		
+		var canvas = d3.select("body").append('svg').attr('width',800).attr('height',900)
+		
+		//////////////////////////////////////////////////////////////////////////
+		///////////////////// THIS IS THE BLUE SPACE OMEGA ///////////////////////
+		//////////////////////////////////////////////////////////////////////////
+		var omega = canvas.append('rect')
+			.attr('x',00)
+			.attr('y',0)
+			.attr('width',420)
+			.attr('height',420)
+			.attr('fill',d3.rgb(20,20,250))
+			.attr('stroke','black')
+	
+			// individual ellipses which are the preimages X^(-1)(1), X^(-1)(0), Y^(-1)(1), Y^(-1)(0)
+			// where Heads = 1, Tails = 0.
+		var Xheads = canvas.append('ellipse')
+			.attr('cx',180)
+			.attr('cy',75)
+			.attr('rx',175)
+			.attr('ry',40)
+			.attr('fill',d3.rgb(0,0,190))
+			.attr('stroke','black')
+			
+		var Xtails = canvas.append('ellipse')
+			.attr('cx',180)
+			.attr('cy',300)
+			.attr('rx',175)
+			.attr('ry',40)
+			.attr('fill',d3.rgb(0,0,190))
+			.attr('stroke','black')
+					
+		var Yheads = canvas.append('ellipse')
+			.attr('cx',75)
+			.attr('cy',180)
+			.attr('rx',40)
+			.attr('ry',175)
+			.attr('fill',d3.rgb(0,0,190))
+			.attr('stroke','black')
+			
+		var Ytails = canvas.append('ellipse')
+			.attr('cx',300)
+			.attr('cy',180)
+			.attr('rx',40)
+			.attr('ry',175)
+			.attr('fill',d3.rgb(0,0,190))
+			.attr('stroke','black')
+							
+		var group = canvas.selectAll('g').data(data).enter().append('g')
+		
+		var singletons = group.append('circle')
+			.attr('cx', function(d) {return d[0];})
+			.attr('cy',function(d) {return d[1];})
+			.attr('r',30)
+			.attr('fill',d3.rgb(0,0,100))
+			.attr('stroke','black')
+			
+		var text = group.append('text')
+			.attr('dx',function(d) {return d[0]-12})	
+			.attr('dy',function(d) {return d[1]+5})
+			.text(function(d) {return d[2]})
+			.attr('font-size',15)
+			.attr('fill','white')
+			.attr("font-family", "fantasy") 
+			
+		//////////////////////////////////////////////////////////////////////////
+		/////////////////// THIS IS THE STUFF BELOW OMEGA  ///////////////////////
+		//////////////////////////////////////////////////////////////////////////
+				
+		var Xtarget = canvas.append('g')
+		var Ytarget = canvas.append('g')
+		
+		canvas.append('text').attr('dx',10).attr('dy',450).text('Hover your mouse over 0 or 1 to see the preimage of the point')
+		
+		
+			// first flip
+		Xtarget.append('line')
+			.attr("x1", 0)
+			.attr("y1", 500)
+			.attr("x2", 400)
+			.attr("y2", 500)
+			.attr("stroke-width", 2)
+			.attr("stroke", "black")
+		
+		Xtarget.append('circle')
+			.attr("cx", 100)
+			.attr('cy', 500)
+			.attr('r',15)
+			.on('mouseover', function(d){
+				d3.select(this).transition().duration(500)
+				.attr('fill','white').attr('stroke','black'),
+				Xtails.transition().duration(500)
+				.style('opacity',0.3)		
+			})
+			.on('mouseout', function(d){
+				d3.select(this).transition().attr('fill','black'),
+				Xtails.transition().style('opacity',1)	
+			})
+		
+		Xtarget.append('circle')
+			.attr('cx',300)
+			.attr('cy',500)
+			.attr('r',15)
+				.on('mouseover', function(d){
+					d3.select(this).transition().duration(500)
+					.attr('fill','white').attr('stroke','black'),
+					Xheads.transition().duration(500)
+					.style('opacity',0.3)		
+				})
+				.on('mouseout', function(d){
+					d3.select(this).transition().attr('fill','black'),
+					Xheads.transition().style('opacity',1)	
+				})
+						
+			
+			
+		Xtarget.append('text')
+			.attr('dx',80)
+			.attr('dy',540)
+			.attr('font-size',15)
+			.attr("font-family", "fantasy") 
+			.text("0 (tails)")
+			.attr('fill','black')
+			
+		Xtarget.append('text')
+			.attr('dx',280)
+			.attr('dy',540)
+			.attr('font-size',15)
+			.attr("font-family", "fantasy") 
+			.text("1 (heads)")
+			.attr('fill','black')
+			
+		Xtarget.append('text')
+			.attr('dx',420)
+			.attr('dy',500)
+			.attr('font-size',15)
+			.attr("font-family", "fantasy") 
+			.text("X (first flip)")
+			.attr('fill','black')
+			
+			// second flip
+		Ytarget.append('line')
+			.attr("x1", 0)
+			.attr("y1", 600)
+			.attr("x2", 400)
+			.attr("y2", 600)
+			.attr("stroke-width", 2)
+			.attr("stroke", "black")
+
+		Ytarget.append('circle')
+			.attr("cx", 100)
+			.attr('cy', 600)
+			.attr('r',15)
+			.on('mouseover', function(d){
+				d3.select(this).transition().duration(500)
+				.attr('fill','white').attr('stroke','black'),
+				Ytails.transition().duration(500)
+				.style('opacity',0.3)		
+			})
+			.on('mouseout', function(d){
+				d3.select(this).transition().attr('fill','black'),
+				Ytails.transition().style('opacity',1)	
+			})
+
+		Ytarget.append('circle')
+			.attr('cx',300)
+			.attr('cy',600)
+			.attr('r',15)
+				.on('mouseover', function(d){
+					d3.select(this).transition().duration(500)
+					.attr('fill','white').attr('stroke','black'),
+					Yheads.transition().duration(500)
+					.style('opacity',0.3)		
+				})
+				.on('mouseout', function(d){
+					d3.select(this).transition().attr('fill','black'),
+					Yheads.transition().style('opacity',1)	
+				})
+			
+		Ytarget.append('text')
+			.attr('dx',80)
+			.attr('dy',640)
+			.attr('font-size',15)
+			.attr("font-family", "fantasy") 
+			.text("0 (tails)")
+			.attr('fill','black')
+		
+		Ytarget.append('text')
+			.attr('dx',280)
+			.attr('dy',640)
+			.attr('font-size',15)
+			.attr("font-family", "fantasy") 
+			.text("1 (heads)")
+			.attr('fill','black')
+		
+		Ytarget.append('text')
+			.attr('dx',420)
+			.attr('dy',600)
+			.attr('font-size',15)
+			.attr("font-family", "fantasy") 
+			.text("Y (second flip)")
+			.attr('fill','black')
+				
+
+			//////////////////////////////////////////////////////////////////////////////////////
+			/////////////////// THIS IS THE NAV BAR TO THE RIGHT OF OMEGA  ///////////////////////
+			//////////////////////////////////////////////////////////////////////////////////////
+		var navbar = canvas.append('g')
+		
+		navbar.append('text')
+			.attr('dx',500)
+			.attr('dy',50)
+			.text('Click on a random variable to')
+		navbar.append('text')
+			.attr('dx',500)
+			.attr('dy',70)
+			.text('see the sigma algebra it generates')
+			
+		var Xsigma = navbar.append('rect')
+			.attr('x',500)	
+			.attr('y',100)
+			.attr('width',40)
+			.attr('height',40)
+		
+		var Ysigma = navbar.append('rect')
+			.attr('x',550)
+			.attr('y',100)
+			.attr('width',40)
+			.attr('height',40)
+		
+		var Ssigma = navbar.append('rect')
+			.attr('x',600)
+			.attr('y',100)
+			.attr('width',40)
+			.attr('height',40)
+		
+		navbar.append('text')
+			.attr('dx',510)
+			.attr('dy',125)
+			.text('X')
+			.attr('fill','white')
+			.attr('font-family','fantasy')
+			.attr('font-size',25)
+		
+		navbar.append('text')
+			.attr('dx',560)
+			.attr('dy',125)
+			.text('Y')
+			.attr('fill','white')
+			.attr('font-family','fantasy')
+			.attr('font-size',25)
+		
+		navbar.append('text')
+			.attr('dx',610)
+			.attr('dy',125)
+			.text('S')
+			.attr('fill','white')
+			.attr('font-family','fantasy')
+			.attr('font-size',25)
+		
+	
+		
+		</script>
+	</body>
+
+</html>
